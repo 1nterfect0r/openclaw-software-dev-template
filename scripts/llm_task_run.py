@@ -4,6 +4,9 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+import os
+
+OPENCLAW_BIN = os.environ.get("OPENCLAW_BIN", "~/.npm-global/bin/openclaw")
 
 def _read_json_stdin() -> dict:
     raw = sys.stdin.buffer.read()
@@ -39,12 +42,14 @@ def main() -> int:
     )
 
     args_json = {"prompt": prompt, "input": task, "schema": schema}
+    cmd = [
+        OPENCLAW_BIN, "invoke",
+        "--tool", "llm-task",
+        "--action", "json",
+        "--args-json", json.dumps(args_json, ensure_ascii=False),
+    ]
+    proc = subprocess.run(cmd, capture_output=True, text=True)
 
-    proc = subprocess.run(
-        ["openclaw.invoke", "--tool", "llm-task", "--action", "json", "--args-json", json.dumps(args_json, ensure_ascii=False)],
-        capture_output=True,
-        text=True,
-    )
     if proc.returncode != 0:
         sys.stderr.write(proc.stderr)
         sys.stdout.write(proc.stdout)
