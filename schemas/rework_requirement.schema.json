@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "action": { "type": "string", "enum": ["needs_input", "rework_requirement"] },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "requirement_markdown": { "type": "string" },
+    "updated_task_body": { "type": "string" }
+  },
+  "required": ["action", "open_questions", "requirement_markdown", "updated_task_body"],
+  "additionalProperties": false
+}
