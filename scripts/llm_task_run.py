@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 import os
 
-OPENCLAW_BIN = os.environ.get("OPENCLAW_BIN", "~/.npm-global/bin/openclaw")
+OPENCLAW_BIN = os.environ.get("OPENCLAW_BIN", "openclaw")
 
 def _read_json_stdin() -> dict:
     raw = sys.stdin.buffer.read()
